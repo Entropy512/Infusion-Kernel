@@ -659,7 +659,7 @@ typedef enum s3c_adc_channel {
 #define __ADJUST_RECHARGE_ADC__
 #ifdef __CHECK_CHG_CURRENT__
 #if defined(CONFIG_S5PC110_DEMPSEY_BOARD)
-#define CURRENT_OF_FULL_CHG		325		//??mA
+#define CURRENT_OF_FULL_CHG		350		//192mA - Cut off charging a little earlier to be nice to the battery, should compensate for cranking the current up in the CC phase
 #define CURRENT_OF_TOPOFF_CHG		186
 #elif defined (CONFIG_S5PC110_VIBRANTPLUS_BOARD)
 //#define CURRENT_OF_FULL_CHG		300		//165mA

@@ -81,7 +81,7 @@ extern unsigned int HWREV;
 // [[junghyunseok edit for fuel_int interrupt control of fuel_gauge 20100504
 irqreturn_t low_battery_isr(int irq, void *dev_id);
 
-//#define BATTERY_DEBUG
+#define BATTERY_DEBUG
 #ifdef BATTERY_DEBUG
 void PMIC_dump(void);
 #endif

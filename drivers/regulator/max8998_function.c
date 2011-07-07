@@ -3126,10 +3126,16 @@ static void maxim_stepcharging_work(struct work_struct *work)
 				Set_MAX8998_PM_ADDR(CHGR1, stepchargingreg_buff, 2); 
 				mod_timer(&chargingstep_timer, jiffies + msecs_to_jiffies(CHARGINGSTEP_INTERVAL));				
 		    }
-	    else if(stepchargingCount == 4)
+	     else if(stepchargingCount == 4)
 		    {             //600mA
+			    stepchargingreg_buff[0] = (stepchargingreg_buff[0] & 0xF8) | 0x05;
+				Set_MAX8998_PM_ADDR(CHGR1, stepchargingreg_buff, 2); 
+				mod_timer(&chargingstep_timer, jiffies + msecs_to_jiffies(CHARGINGSTEP_INTERVAL));				
+		    }
+	    else if(stepchargingCount == 5)
+		    {             //800mA
             	           stepchargingCount = 0;
-			    stepchargingreg_buff[0] = (stepchargingreg_buff[0] & 0xF8) | 0x06;
+			    stepchargingreg_buff[0] = (stepchargingreg_buff[0] & 0xF8) | 0x07;
 				Set_MAX8998_PM_ADDR(CHGR1, stepchargingreg_buff, 2); 
 		    }
 	     else
