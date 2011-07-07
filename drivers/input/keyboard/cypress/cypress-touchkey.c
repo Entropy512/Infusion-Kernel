@@ -35,6 +35,8 @@
 #ifdef CONFIG_REGULATOR_MAX8893
 #include <mach/max8998_function.h>
 #endif
+// #define TOUCHKEY_DEBUG
+
 /*
 Melfas touchkey register
 */
@@ -258,13 +260,17 @@ void touchkey_work_func(struct work_struct *p)
 							  KEYCODE_BIT], 0);
 			input_sync(touchkey_driver->input_dev);
 			//printk(" touchkey release keycode: %d\n", touchkey_keycode[data[0] & KEYCODE_BIT]);
+#ifdef TOUCHKEY_DEBUG
 			printk(KERN_DEBUG "touchkey release keycode:%d \n",
 			       touchkey_keycode[data[0] & KEYCODE_BIT]);
+#endif
 
 		} else {
 			if (touch_state_val == 1) {
+#ifdef TOUCHKEY_DEBUG
 				printk(KERN_DEBUG
 				       "touchkey pressed but don't send event because touch is pressed. \n");
+#endif
 				set_touchkey_debug('P');
 			} else {
 				if ((data[0] & KEYCODE_BIT) == 2) {	// if back key is pressed, release multitouch
@@ -278,9 +284,11 @@ void touchkey_work_func(struct work_struct *p)
 						 1);
 				input_sync(touchkey_driver->input_dev);
 				//printk(" touchkey press keycode: %d\n", touchkey_keycode[data[0] & KEYCODE_BIT]);
+#ifdef TOUCHKEY_DEBUG
 				printk(KERN_DEBUG
 				       "touchkey press keycode:%d \n",
 				       touchkey_keycode[data[0] & KEYCODE_BIT]);
+#endif
 			}
 		}
 	}
@@ -629,7 +637,9 @@ static ssize_t touch_led_control(struct device *dev,
 {
 	unsigned char data;
 	if (sscanf(buf, "%d\n", &data) == 1) {
+#ifdef TOUCHKEY_DEBUG
 		printk(KERN_DEBUG "touch_led_control: %d \n", data);
+#endif
 		i2c_touchkey_write(&data, 1);
 		touchkey_led_status = data;
 	} else
