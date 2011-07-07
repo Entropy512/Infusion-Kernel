@@ -31,6 +31,8 @@
 //#undef CONFIG_CPU_FREQ
 #define TCH_KERN_DEBUG          //KERN_DEBUG
 
+// #define TSP_DEBUG
+
 #ifdef CONFIG_CPU_FREQ
 #include <mach/cpu-freq-v210.h>
 #endif
@@ -161,7 +163,9 @@ void touch_led_set_voltage(int val)
 	default :	Set_MAX8998_PM_OUTPUT_Voltage(LDO14, VCC_3p300); break;
 	}
 
+#ifdef TSP_DEBUG
 	printk(KERN_DEBUG "[TSP] %s: Key LED voltage is set to [%d]\n", __func__, val);
+#endif
 
 	return;
 }
@@ -206,12 +210,16 @@ static ssize_t key_led_store(struct device *dev, struct device_attribute *attr,
 	{
 		touch_led_set_voltage(KeyLedBrightnessLevel);
 		touch_led_on(true);
+#ifdef TSP_DEBUG
 		printk(KERN_DEBUG "[TSP] %s: keyled is on.\n", __func__);
+#endif
 	}
 	else
 	{
 		touch_led_on(false);
+#ifdef TSP_DEBUG
 		printk(KERN_DEBUG "[TSP] %s: keyled is off.\n", __func__);
+#endif
 	}
 
     return size;
@@ -981,14 +989,18 @@ uint8_t calibrate_chip(void)
 		acquisition_config.atchcalst = 0;
 		acquisition_config.atchcalsthr = 0; 
 
+#ifdef TSP_DEBUG
 		  dprintk("\n[TSP][%s] \n", __func__);
 		dprintk("[TSP] reset acq atchcalst=%d, atchcalsthr=%d\n", acquisition_config.atchcalst, acquisition_config.atchcalsthr );
+#endif
 
 		/* Write temporary acquisition config to chip. */
 		if (write_acquisition_config(acquisition_config) != CFG_WRITE_OK)
 		{
 		/* "Acquisition config write failed!\n" */
+#ifdef TSP_DEBUG
 		dprintk("\n[TSP][ERROR] line : %d\n", __LINE__);
+#endif
 		ret = WRITE_MEM_FAILED; /* calling function should retry calibration call */
 		}
 
@@ -2830,14 +2842,18 @@ void check_chip_calibration(unsigned char one_touch_input_flag)
 			if(try_ctr > 10) //0318 hugh 100-> 10
 			{
 				/* Failed! */
+#ifdef TSP_DEBUG
 				dprintk("[TSP] Diagnostic Data did not update!!\n");
+#endif
 				qt_timer_state = 0;//0430 hugh
 				break;
 			}
 			msleep(2); //0318 hugh  3-> 2
 			try_ctr++; /* timeout counter */
 			read_mem(diag_address, 2,data_buffer);
+#ifdef TSP_DEBUG
 			dprintk("[TSP] Waiting for diagnostic data to update, try %d\n", try_ctr);
+#endif
 		}
 
 
@@ -2897,7 +2913,9 @@ void check_chip_calibration(unsigned char one_touch_input_flag)
 
 
 			/* print how many channels we counted */
+#ifdef TSP_DEBUG
 			printk(KERN_DEBUG "[TSP] Flags Counted channels: t:%d a:%d \n", tch_ch, atch_ch);
+#endif
 
 			/* send page up command so we can detect when data updates next time,
 			 * page byte will sit at 1 until we next send F3 command */
@@ -2923,18 +2941,24 @@ void check_chip_calibration(unsigned char one_touch_input_flag)
 				if(good_check_flag >=2)
 #endif
 				{
+#ifdef TSP_DEBUG
 				printk(KERN_DEBUG" [TSP] calibration was good\n");
+#endif
 					cal_check_flag = 0;
 					good_check_flag = 0;
 					qt_timer_state =0;
 					qt_time_point = jiffies_to_msecs(jiffies);
 
+#ifdef TSP_DEBUG
 					dprintk("[TSP] reset acq atchcalst=%d, atchcalsthr=%d\n", acquisition_config.atchcalst, acquisition_config.atchcalsthr );
+#endif
 					/* Write normal acquisition config back to the chip. */
 					if (write_acquisition_config(acquisition_config) != CFG_WRITE_OK)
 					{
 						/* "Acquisition config write failed!\n" */
+#ifdef TSP_DEBUG
 						printk(KERN_DEBUG "\n[TSP][ERROR] line : %d\n", __LINE__);
+#endif
 						// MUST be fixed
 					}
 
@@ -2954,11 +2978,15 @@ void check_chip_calibration(unsigned char one_touch_input_flag)
 				else if(one_touch_input_flag == 1)
 				{
 					good_check_flag++;
+#ifdef TSP_DEBUG
 				       dprintk("[TSP]good_check_flag became %d\n", good_check_flag);
+#endif
 				}        
 				else if( one_touch_input_flag != 1 )
 				{
+#ifdef TSP_DEBUG
 				        dprintk("[TSP] do calibrate_chip because of multi touch\n");
+#endif
 				        good_check_flag=0;
 				        calibrate_chip();
 				        
@@ -2969,21 +2997,27 @@ void check_chip_calibration(unsigned char one_touch_input_flag)
 			else if(atch_ch >= 8)		//jwlee add 0325
 			{
 #if 1
+#ifdef TSP_DEBUG
 				printk(KERN_DEBUG "[TSP] calibration was bad\n");
+#endif
 				/* cal was bad - must recalibrate and check afterwards */
 				calibrate_chip();
 				qt_timer_state=0;
 				qt_time_point = jiffies_to_msecs(jiffies);
 #else
                             good_check_flag = 0; //hugh 0312
+#ifdef TSP_DEBUG
 				printk(KERN_DEBUG "[TSP] calibration was bad\n");
+#endif
 				/* cal was bad - must recalibrate and check afterwards */
 				calibrate_chip();
 #endif
 			}
 #if 1
 			else {
+#ifdef TSP_DEBUG
 				printk(KERN_DEBUG"[TSP] calibration was not decided yet\n");
+#endif
 				/* we cannot confirm if good or bad - we must wait for next touch  message to confirm */
 				cal_check_flag = 1u;
 				/* Reset the 100ms timer */
@@ -3319,12 +3353,16 @@ void TSP_forced_release_forOKkey(void)
 		if (write_command_config(command_config) != CFG_WRITE_OK)
 		{
 		/* "Acquisition config write failed!\n" */
+#ifdef TSP_DEBUG
 		printk(KERN_DEBUG "\n[TSP][ERROR] line : %d\n", __LINE__);
+#endif
 		ret = WRITE_MEM_FAILED; /* calling function should retry calibration call */
 		}		
 
+#ifdef TSP_DEBUG
 		printk(KERN_DEBUG "\n[TSP][%s] \n", __func__);
 		printk(KERN_DEBUG "[TSP] reset acq reportall=%d\n", command_config.reportall);
+#endif
 		
 
 		msleep(20);
@@ -3435,7 +3473,9 @@ void  get_message(struct work_struct * p)
 			{
 				if((quantum_msg[1]&0x01) == 0x00)   
 				{ 
+#ifdef TSP_DEBUG
 					printk(KERN_DEBUG "[TSP] Palm Touch! - %d released, Ver. %x\n", quantum_msg[1], info_block->info_id.version );	
+#endif
 					for ( i= 0; i<MAX_USING_FINGER_NUM; ++i )
 					{
 						if ( fingerInfo[i].pressure == -1 ) continue;
@@ -3468,7 +3508,9 @@ void  get_message(struct work_struct * p)
 				}
 				else
 				{
+#ifdef TSP_DEBUG
 					printk(KERN_DEBUG "[TSP] Palm Touch! - %d suppressed\n", quantum_msg[1]);	
+#endif
 					touch_message_flag = 1;
 					one_touch_input_flag = 1; //hugh 0312
 //					if(cal_check_flag == 2)
@@ -3480,7 +3522,9 @@ void  get_message(struct work_struct * p)
 					 if (write_command_config(command_config) != CFG_WRITE_OK)
 					 {
 					 /* "Acquisition config write failed!\n" */
+#ifdef TSP_DEBUG
 					 printk(KERN_DEBUG "\n[TSP][ERROR] line : %d\n", __LINE__);
+#endif
 					 ret = WRITE_MEM_FAILED; /* calling function should retry calibration call */
 					 }		
 #if defined(CONFIG_S5PC110_DEMPSEY_BOARD)	
@@ -3502,8 +3546,10 @@ void  get_message(struct work_struct * p)
 			
 			if(quantum_msg[0] < 2  || quantum_msg[0] >= 12) {
 			
+#ifdef TSP_DEBUG
 				printk(KERN_DEBUG "[TSP] msg id =  %x %x %x %x %x %x %x %x %x\n", quantum_msg[0], quantum_msg[1], quantum_msg[2],\
 					 quantum_msg[3], quantum_msg[4], quantum_msg[5], quantum_msg[6], quantum_msg[7], quantum_msg[8]);
+#endif
 
 				if((quantum_msg[0] == 1)&&((quantum_msg[1]&0x10) == 0x10)){
 					dprintk(" [TSP] quantum_msg[0] = 1 and quantum_msg[1] = 0x10  cal_check_flag=1\n");
@@ -3671,7 +3717,9 @@ void  get_message(struct work_struct * p)
 				fingerInfo[id].size_id= (id<<8)|size;
 				fingerInfo[id].pressure= 0;
 				bChangeUpDn= 1;
+#ifdef TSP_DEBUG
 				printk(KERN_DEBUG "[TSP]### Finger[%d] Up (%d,%d) - touch num is (%d)  status=0x%02x\n", id, fingerInfo[id].x, fingerInfo[id].y , --qt_touch_num_state[id], quantum_msg[1]);
+#endif
 			}
 			else if ( (quantum_msg[1] & 0x80) && (quantum_msg[1] & 0x40) )	// Detect & Press
 			{
@@ -3694,7 +3742,9 @@ void  get_message(struct work_struct * p)
 				fingerInfo[id].x= (int16_t)x;
 				fingerInfo[id].y= (int16_t)y;
 				bChangeUpDn= 1;
+#ifdef TSP_DEBUG
 				printk(KERN_DEBUG "[TSP]### Finger[%d] Down (%d,%d) - touch num is (%d)   status=0x%02x\n", id, fingerInfo[id].x, fingerInfo[id].y , ++qt_touch_num_state[id], quantum_msg[1] );
+#endif
 			}
 			else if ( (quantum_msg[1] & 0x80) && (quantum_msg[1] & 0x10) )	// Detect & Move
 			{
@@ -3799,7 +3849,9 @@ void  get_message(struct work_struct * p)
 
 		input_sync(qt602240->input_dev);
 		amplitude = quantum_msg[6];
+#ifdef TSP_DEBUG
 		dprintk("[TSP]%s x=%3d, y=%3d, BTN=%d, size=%d, amp=%d\n",__FUNCTION__, x, y,press, size , amplitude);
+#endif
 
 #ifdef CONFIG_CPU_FREQ
 #if USE_PERF_LEVEL_TS
@@ -3812,7 +3864,9 @@ void  get_message(struct work_struct * p)
 	{
 		input_sync(qt602240->input_dev);
 		amplitude = quantum_msg[6];
+#ifdef TSP_DEBUG
 		dprintk("[TSP]%s x=%3d, y=%3d, BTN=%d, size=%d, amp=%d\n",__FUNCTION__, x, y,press, size , amplitude);
+#endif
 	}
 #endif
 
@@ -4120,9 +4174,11 @@ int qt602240_probe(struct i2c_client *client,
 	printk("qt602240_i2c is attached..\n");
 
 //	DEBUG;
+#ifdef TSP_DEBUG
 	dprintk("+-----------------------------------------+\n");
 	printk(KERN_DEBUG "|  Quantum Touch Driver Probe!            |\n");
 	dprintk("+-----------------------------------------+\n");
+#endif
 
 	INIT_WORK(&qt602240->ts_event_work, get_message );
 
@@ -4131,7 +4187,9 @@ int qt602240_probe(struct i2c_client *client,
 	qt602240->input_dev = input_allocate_device();
 	if (qt602240->input_dev == NULL) {
 		ret = -ENOMEM;
+#ifdef TSP_DEBUG
 		printk(KERN_DEBUG "qt602240_probe: Failed to allocate input device\n");
+#endif
 		goto err_input_dev_alloc_failed;
 	}
 	qt602240->input_dev->name = "qt602240_ts_input";
@@ -4164,7 +4222,9 @@ int qt602240_probe(struct i2c_client *client,
 	
 	ret = input_register_device(qt602240->input_dev);
 	if (ret) {
+#ifdef TSP_DEBUG
 		printk(KERN_DEBUG "qt602240_probe: Unable to register %s input device\n", qt602240->input_dev->name);
+#endif
 		goto err_input_register_device_failed;
 	}
 
@@ -4195,6 +4255,7 @@ int qt602240_probe(struct i2c_client *client,
 	s3c_gpio_cfgpin(GPIO_TOUCH_INT, S3C_GPIO_SFN(0xf));
 	
 	ret = request_irq(qt602240->client->irq, qt602240_irq_handler, IRQF_DISABLED, "qt602240 irq", qt602240);
+#ifdef TSP_DEBUG
 	if (ret == 0) {
 		dprintk("[TSP] qt602240_probe: Start touchscreen %s\n", qt602240->input_dev->name);
 	}
@@ -4204,6 +4265,7 @@ int qt602240_probe(struct i2c_client *client,
 
 
 	dprintk("%s ,  %d\n",__FUNCTION__, __LINE__ );
+#endif
 	//	enable_irq(qt602240->client->irq);
 #ifdef USE_TSP_EARLY_SUSPEND
 	qt602240->early_suspend.level = EARLY_SUSPEND_LEVEL_BLANK_SCREEN + 1;
@@ -4381,7 +4443,9 @@ static int qt602240_late_resume(struct early_suspend *h)
 	//init_hw_setting();
 	//s3c_gpio_cfgpin(GPIO_TOUCH_INT, S3C_GPIO_SFN(0xf));
 
+#ifdef TSP_DEBUG
 	printk(KERN_DEBUG "\n[TSP][%s] \n",__func__);
+#endif
 	if ( (ret = write_power_config(power_config)) != CFG_WRITE_OK)
 	{
 		/* "Power config write failed!\n" */
@@ -4441,7 +4505,9 @@ void init_hw_setting(void)
 #ifndef CONFIG_S5PC110_DEMPSEY_BOARD
 	if (gpio_is_valid(GPIO_TOUCH_EN)) {
 		if (gpio_request(GPIO_TOUCH_EN, "GPG3"))
+#ifdef TSP_DEBUG
 			printk(KERN_DEBUG "Failed to request GPIO_TOUCH_EN!\n");
+#endif
 		gpio_direction_output(GPIO_TOUCH_EN, 1);
 	}
 
@@ -4482,6 +4548,7 @@ void init_hw_setting(void)
 
 
 #endif 
+#ifdef TSP_DEBUG
 	printk(KERN_DEBUG "qt602240 GPIO Status\n");
 #ifndef CONFIG_S5PC110_DEMPSEY_BOARD
 	printk(KERN_DEBUG "TOUCH_EN  : %s\n", gpio_get_value(GPIO_TOUCH_EN)? "High":"Low");
@@ -4489,7 +4556,7 @@ void init_hw_setting(void)
 #endif
 //	printk("TOUCH_INT : %s\n", gpio_get_value(GPIO_TOUCH_INT_N)? "High":"Low");
 	printk(KERN_DEBUG "TOUCH_INT : %s\n", gpio_get_value(GPIO_TOUCH_INT)? "High":"Low");
-
+#endif
 	msleep(100);
 }
 
@@ -4625,7 +4692,9 @@ void TSP_Restart(void)
 	
 	if (gpio_is_valid(GPIO_TOUCH_EN)) {
 		if (gpio_request(GPIO_TOUCH_EN, "GPG3"))
+#ifdef TSP_DEBUG
 			printk(KERN_DEBUG "Failed to request GPIO_TOUCH_EN!\n");
+#endif
 		gpio_set_value(GPIO_TOUCH_EN, 0);
 	}
 	gpio_free(GPIO_TOUCH_EN);
@@ -4634,7 +4703,9 @@ void TSP_Restart(void)
 
 	if (gpio_is_valid(GPIO_TOUCH_EN)) {
 		if (gpio_request(GPIO_TOUCH_EN, "GPG3"))
+#ifdef TSP_DEBUG
 			printk(KERN_DEBUG "Failed to request GPIO_TOUCH_EN!\n");
+#endif
 		gpio_set_value(GPIO_TOUCH_EN, 1);
 	}
 	gpio_free(GPIO_TOUCH_EN);
