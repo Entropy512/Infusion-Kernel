@@ -84,14 +84,14 @@ extern u32 free_freq_levels;
 
 /* frequency */
 struct cpufreq_frequency_table s5pc110_freq_table_1GHZ[] = {
-        {L0, 1600*1000},
-        {L1, 1500*1000},
-	{L2, 1400*1000},
-        {L3, 1300*1000},
-	{L4, 1200*1000},
-	{L5, 1100*1000},
-	{L6, 1000*1000},
-	{L7, 900*1000},
+        {L0, 1800*1000},
+        {L1, 1700*1000},
+        {L2, 1600*1000},
+	{L3, 1500*1000},
+        {L4, 1400*1000},
+	{L5, 1300*1000},
+	{L6, 1200*1000},
+	{L7, 1000*1000},
 	{L8, 800*1000},
         {L9, 600*1000},
 	{L10, 400*1000},
@@ -102,14 +102,14 @@ struct cpufreq_frequency_table s5pc110_freq_table_1GHZ[] = {
 
 /*Assigning different index for fast scaling up*/
 static unsigned char transition_state_1GHZ[][2] = {
-	{1, 5},//1600
-        {2, 5},//1500
-        {3, 5},//1400
-        {4, 5},//1300
-        {5, 5},//1200
-        {6, 5},//1120
-        {7, 5},//1000
-        {8, 6},//900
+	{1, 5},//1800
+        {2, 5},//1700
+        {3, 5},//1600
+        {4, 5},//1500
+        {5, 5},//1400
+        {6, 5},//1300
+        {7, 5},//1200
+        {8, 6},//1000
         {9, 7},//800
         {10, 8},//600 
         {11, 9},//400 
@@ -119,14 +119,14 @@ static unsigned char transition_state_1GHZ[][2] = {
 
 /* frequency */
 static struct cpufreq_frequency_table s5pc110_freq_table_1d2GHZ[] = {
-        {L0, 1600*1000},
-        {L1, 1500*1000},
-	{L2, 1400*1000},
-        {L3, 1300*1000},
-	{L4, 1200*1000},
-	{L5, 1100*1000},
-	{L6, 1000*1000},
-	{L7, 900*1000},
+        {L0, 1800*1000},
+        {L1, 1700*1000},
+	{L2, 1600*1000},
+        {L3, 1500*1000},
+	{L4, 1400*1000},
+	{L5, 1300*1000},
+	{L6, 1200*1000},
+	{L7, 1000*1000},
 	{L8, 800*1000},
         {L9, 600*1000},
 	{L10, 400*1000},
@@ -137,14 +137,14 @@ static struct cpufreq_frequency_table s5pc110_freq_table_1d2GHZ[] = {
 
 /*Assigning different index for fast scaling up*/
 static unsigned char transition_state_1d2GHZ[][2] = {
-	{1, 5},//1600
-        {2, 5},//1500
-        {3, 5},//1400
-        {4, 5},//1300
-        {5, 5},//1200
-        {6, 5},//1120
-        {7, 5},//1000
-        {8, 6},//900
+	{1, 5},//1800
+        {2, 5},//1700
+        {3, 5},//1600
+        {4, 5},//1500
+        {5, 5},//1400
+        {6, 5},//1300
+        {7, 5},//1200
+        {8, 6},//1000
         {9, 7},//800
         {10, 8},//600 
         {11, 9},//400 
@@ -169,14 +169,14 @@ unsigned int s5pc110_thres_table_1GHZ[][2] = {
 	{55, 90}, //400
 	{55, 90}, //600
 	{55, 90}, //800
-	{55, 90}, //900
 	{55, 90}, //1000
-	{60, 80}, // 1120
-	{60, 80}, // 1200
+	{55, 90}, //1200
 	{60, 80}, // 1300
 	{60, 80}, // 1400
 	{60, 80}, // 1500
 	{60, 80}, // 1600
+	{60, 80}, // 1700
+	{60, 80}, // 1800
 };
 
 unsigned int s5pc110_thres_table_1d2GHZ[][2] = {
@@ -185,14 +185,14 @@ unsigned int s5pc110_thres_table_1d2GHZ[][2] = {
 	{55, 90}, //400
 	{55, 90}, //600
 	{55, 90}, //800
-	{55, 90}, //900
 	{55, 90}, //1000
-	{60, 80}, // 1120
-	{60, 80}, // 1200
+	{55, 90}, //1200
 	{60, 80}, // 1300
 	{60, 80}, // 1400
 	{60, 80}, // 1500
 	{60, 80}, // 1600
+	{60, 80}, // 1700
+	{60, 80}, // 1800
 };
 
 unsigned int  (*s5pc110_thres_table[2])[2] = {
@@ -207,6 +207,12 @@ static int get_dvfs_perf_level(enum freq_level_states freq_level, unsigned int *
 	struct cpufreq_frequency_table *freq_tab = s5pc110_freq_table[S5PC11X_FREQ_TAB];
 	switch(freq_level)
 	{
+        case LEV_1800MHZ:
+                freq = 1800 * 1000;
+                break;
+        case LEV_1700MHZ:
+                freq = 1700 * 1000;
+                break;
         case LEV_1600MHZ:
                 freq = 1600 * 1000;
                 break;
@@ -222,14 +228,8 @@ static int get_dvfs_perf_level(enum freq_level_states freq_level, unsigned int *
         case LEV_1200MHZ:
                 freq = 1200 * 1000;
                 break;
-        case LEV_1100MHZ:
-                freq = 1100 * 1000;
-                break;
         case LEV_1000MHZ:
                 freq = 1000 * 1000;
-                break;
-        case LEV_900MHZ:
-                freq = 900 * 1000;
                 break;
         case LEV_800MHZ:
                 freq = 800 * 1000;
