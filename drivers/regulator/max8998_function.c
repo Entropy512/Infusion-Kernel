@@ -3214,7 +3214,7 @@ void maxim_charging_control(unsigned int dev_type  , unsigned int cmd, int uicha
               iTemp = iTemp | 0x30;  // disable Fast charging Timer
 		Set_MAX8998_PM_ADDR(CHGR2, &iTemp, 1); //TOP-OFF INT disable 
 
-		stepchargingreg_buff[0] = (0x0 <<5) |(0x3 << 3) |(0x6<<0) ; // CHG_TOPOFF_TH=10%, CHG_RST_HYS=disable, AC_FCGH= 600mA
+		stepchargingreg_buff[0] = (0x0 <<5) |(0x3 << 3) |(0x5<<0) ; // CHG_TOPOFF_TH=10%, CHG_RST_HYS=disable, AC_FCGH= 600mA
 
 #else
 	
@@ -3222,12 +3222,12 @@ void maxim_charging_control(unsigned int dev_type  , unsigned int cmd, int uicha
 
 #if defined(CONFIG_S5PC110_T959_BOARD) || defined(CONFIG_S5PC110_HAWK_BOARD) || defined (CONFIG_S5PC110_VIBRANTPLUS_BOARD)		
 
-			stepchargingreg_buff[0] = (0x1 <<5) |(0x3 << 3) |(0x6<<0) ; // CHG_TOPOFF_TH=15%, CHG_RST_HYS=disable, AC_FCGH= 600mA
+			stepchargingreg_buff[0] = (0x1 <<5) |(0x3 << 3) |(0x5<<0) ; // CHG_TOPOFF_TH=15%, CHG_RST_HYS=disable, AC_FCGH= 600mA
 #else	
-			stepchargingreg_buff[0] = (0x0 <<5) |(0x3 << 3) |(0x6<<0) ; // CHG_TOPOFF_TH=10%, CHG_RST_HYS=disable, AC_FCGH= 600mA
+			stepchargingreg_buff[0] = (0x0 <<5) |(0x3 << 3) |(0x5<<0) ; // CHG_TOPOFF_TH=10%, CHG_RST_HYS=disable, AC_FCGH= 600mA
 #endif
 		else
-			stepchargingreg_buff[0] = (0x2 <<5) |(0x3 << 3) |(0x6<<0) ; // CHG_TOPOFF_TH=20%, CHG_RST_HYS=disable, AC_FCGH= 600mA
+			stepchargingreg_buff[0] = (0x2 <<5) |(0x3 << 3) |(0x5<<0) ; // CHG_TOPOFF_TH=20%, CHG_RST_HYS=disable, AC_FCGH= 600mA
 #endif
 
 #if 1

@@ -59,7 +59,6 @@ struct cfq_io_context {
 	struct rcu_head rcu_head;
 };
 
-
 /*
  * Indexes into the ioprio_changed bitmap.  A bit set indicates that
  * the corresponding I/O scheduler needs to see a ioprio update.
