@@ -33,7 +33,7 @@
 						"cpufreq-core", msg)
 
 int exp_UV_mV[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
-int active_states[13] = {0,0,0,0,1,0,1,0,1,0,1,1,1};
+int active_states[13] = {0,0,0,0,0,0,0,1,1,1,1,1,1};
 int exp_update_states=1;
 
 extern unsigned int frequency_voltage_tab[][3];
