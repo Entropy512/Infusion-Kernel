@@ -1,0 +1,5 @@
+#!/bin/sh
+cp -Rf reactor-B/arch/ ./
+export KBUILD_BUILD_VERSION="Infusion 2.0 Beta Core"
+make bedwa_defconfig
+make -j48 && cp -a $(find . -name *.ko -print) ../initramfs/lib/modules/ && make -j48

@@ -221,7 +221,11 @@ static void keypad_timer_handler(unsigned long data)
 #ifdef CONFIG_CPU_FREQ
 #if USE_PERF_LEVEL_KEYPAD
 		if (press_mask || release_mask)
+#ifdef LEV_400MHZ
 			set_dvfs_target_level(LEV_400MHZ);
+#else
+			set_dvfs_target_level(LEV_416MHZ);
+#endif
 #endif
 #endif
 		i = col * KEYPAD_ROWS;
@@ -564,7 +568,11 @@ static irqreturn_t s3c_keygpio_ok_isr(int irq, void *dev_id)
 	struct input_dev *dev = pdata->dev;
 
 	#ifdef CONFIG_CPU_FREQ
+	#ifdef LEV_800MHZ
 	set_dvfs_target_level(LEV_800MHZ);
+	#else
+	set_dvfs_target_level(LEV_832MHZ);
+	#endif
 	#endif
 	// Beware that we may not obtain exact key up/down status at
 	// this point.

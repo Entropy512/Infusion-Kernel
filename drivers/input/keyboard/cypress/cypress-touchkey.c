@@ -205,7 +205,11 @@ void touchkey_work_func(struct work_struct *p)
 	set_touchkey_debug('a');
 	if (!gpio_get_value(_3_GPIO_TOUCH_INT)) {
 		#ifdef CONFIG_CPU_FREQ
+		#ifdef LEV_800MHZ
 		set_dvfs_target_level(LEV_800MHZ);
+		#else
+		set_dvfs_target_level(LEV_832MHZ);
+		#endif
 		#endif
 		ret = i2c_touchkey_read(KEYCODE_REG, data, 1);
 		set_touchkey_debug(data[0]);

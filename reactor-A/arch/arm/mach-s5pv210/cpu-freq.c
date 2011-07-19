@@ -42,7 +42,7 @@
 #define DBG(fmt...)
 //#define DBG(fmt...) printk(fmt)
 
-extern int active_states[13];
+extern int active_states[9];
 
 unsigned int dvfs_change_direction;
 #define CLIP_LEVEL(a, b) (a > b ? b : a)
@@ -84,72 +84,56 @@ extern u32 free_freq_levels;
 
 /* frequency */
 struct cpufreq_frequency_table s5pc110_freq_table_1GHZ[] = {
-        {L0, 2400*1000},
-        {L1, 2300*1000},
-        {L2, 2200*1000},
-	{L3, 2000*1000},
-        {L4, 1800*1000},
-	{L5, 1600*1000},
-	{L6, 1400*1000},
-	{L7, 1200*1000},
-	{L8, 1000*1000},
-        {L9, 800*1000},
-	{L10, 400*1000},
-	{L11, 200*1000},
-	{L12, 100*1000},
+        {L0, 1600*1000},
+	{L1, 1400*1000},
+	{L2, 1200*1000},
+	{L3, 1000*1000},
+	{L4, 800*1000},
+        {L5, 600*1000},
+	{L6, 400*1000},
+	{L7, 200*1000},
+	{L8, 100*1000},
 	{0, CPUFREQ_TABLE_END},
 };
 
 /*Assigning different index for fast scaling up*/
 static unsigned char transition_state_1GHZ[][2] = {
-	{1, 5},//2400
-        {2, 5},//2300
-        {3, 5},//2200
-        {4, 5},//2000
-        {5, 5},//1800
-        {6, 5},//1600
-        {7, 5},//1400
-        {8, 6},//1200
-        {9, 7},//1000
-        {10, 8},//800 
-        {11, 9},//400 
-        {12, 10},//200 
-        {12, 11},//100 
+        {1, 0},//1600
+        {2, 0},//1400
+        {3, 1},//1200
+        {4, 2},//1000
+        {5, 3},//800
+        {6, 4},//600 
+        {7, 5},//400 
+        {8, 6},//200 
+        {8, 7},//100 
 };
 
 /* frequency */
 static struct cpufreq_frequency_table s5pc110_freq_table_1d2GHZ[] = {
-        {L0, 2400*1000},
-        {L1, 2300*1000},
-        {L2, 2200*1000},
-	{L3, 2000*1000},
-        {L4, 1800*1000},
-	{L5, 1600*1000},
-	{L6, 1400*1000},
-	{L7, 1200*1000},
-	{L8, 1000*1000},
-        {L9, 800*1000},
-	{L10, 400*1000},
-	{L11, 200*1000},
-	{L12, 100*1000},
+        {L0, 1600*1000},
+	{L1, 1400*1000},
+	{L2, 1200*1000},
+	{L3, 1000*1000},
+	{L4, 800*1000},
+        {L5, 600*1000},
+	{L6, 400*1000},
+	{L7, 200*1000},
+	{L8, 100*1000},
 	{0, CPUFREQ_TABLE_END},
 };
 
 /*Assigning different index for fast scaling up*/
 static unsigned char transition_state_1d2GHZ[][2] = {
-	{1, 5},//2400
-        {2, 5},//2300
-        {3, 5},//2200
-        {4, 5},//2000
-        {5, 5},//1800
-        {6, 5},//1600
-        {7, 5},//1400
-        {8, 6},//1200
-        {9, 7},//1000
-        {10, 8},//800 
-        {11, 9},//400 
-        {12, 10},//200 
-        {12, 11},//100 
+        {1, 0},//1600
+        {2, 0},//1400
+        {3, 1},//1200
+        {4, 2},//1000
+        {5, 3},//800
+        {6, 4},//600 
+        {7, 5},//400 
+        {8, 6},//200 
+        {8, 7},//100 
 };
 
 
@@ -167,32 +151,24 @@ unsigned int s5pc110_thres_table_1GHZ[][2] = {
 	{55, 80}, //100
 	{55, 90}, //200
 	{55, 90}, //400
+	{55, 90}, //600
 	{55, 90}, //800
 	{55, 90}, //1000
-	{55, 90}, //1200
-	{55, 90}, //1400
+	{60, 80}, // 1200
+	{60, 80}, // 1400
 	{60, 80}, // 1600
-	{60, 80}, // 1800
-	{60, 80}, // 2000
-	{60, 80}, // 2200
-	{60, 80}, // 2300
-	{60, 80}, // 2400
 };
 
 unsigned int s5pc110_thres_table_1d2GHZ[][2] = {
 	{55, 80}, //100
 	{55, 90}, //200
 	{55, 90}, //400
+	{55, 90}, //600
 	{55, 90}, //800
 	{55, 90}, //1000
-	{55, 90}, //1200
-	{55, 90}, //1400
-	{60, 80}, // 1600
-	{60, 80}, // 1800
-	{60, 80}, // 2000
-	{60, 80}, // 2200
-	{60, 80}, // 2300
-	{60, 80}, // 2400
+	{60, 80}, //1200
+	{60, 80}, //1400
+	{60, 80}, //1600
 };
 
 unsigned int  (*s5pc110_thres_table[2])[2] = {
@@ -207,21 +183,6 @@ static int get_dvfs_perf_level(enum freq_level_states freq_level, unsigned int *
 	struct cpufreq_frequency_table *freq_tab = s5pc110_freq_table[S5PC11X_FREQ_TAB];
 	switch(freq_level)
 	{
-        case LEV_2400MHZ:
-                freq = 2400 * 1000;
-                break;
-        case LEV_2300MHZ:
-                freq = 2300 * 1000;
-                break;
-        case LEV_2200MHZ:
-                freq = 2200 * 1000;
-                break;
-        case LEV_2000MHZ:
-                freq = 2000 * 1000;
-                break;
-        case LEV_1800MHZ:
-                freq = 1800 * 1000;
-                break;
         case LEV_1600MHZ:
                 freq = 1600 * 1000;
                 break;
@@ -236,6 +197,9 @@ static int get_dvfs_perf_level(enum freq_level_states freq_level, unsigned int *
                 break;
         case LEV_800MHZ:
                 freq = 800 * 1000;
+                break;
+        case LEV_600MHZ:
+                freq = 600 * 1000;
                 break;
         case LEV_400MHZ:
                 freq = 400 * 1000;
@@ -846,9 +810,9 @@ static int __init s5pc110_cpu_init(struct cpufreq_policy *policy)
 	//spin_lock_irqsave(&g_cpufreq_lock, irqflags);
 
                S5PC11X_FREQ_TAB = 0;
-               S5PC11X_MAXFREQLEVEL = 12;
-               MAXFREQ_LEVEL_SUPPORTED = 13;
-               g_dvfs_high_lock_limit = 12;
+               S5PC11X_MAXFREQLEVEL = 8;
+               MAXFREQ_LEVEL_SUPPORTED = 9;
+               g_dvfs_high_lock_limit = 8;
 
         printk("S5PC11X_FREQ_TAB=%d , S5PC11X_MAXFREQLEVEL=%d\n",S5PC11X_FREQ_TAB,S5PC11X_MAXFREQLEVEL);
 

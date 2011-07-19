@@ -106,19 +106,15 @@ enum PMIC_VOLTAGE {
 unsigned int frequency_match_1GHZ[][4] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
 #if 1
-	{2400000, 1500, 1100, 0}, 
-	{2300000, 1500, 1100, 1}, 
-	{2200000, 1450, 1100, 2}, 
-	{2000000, 1450, 1100, 3}, 
-	{1800000, 1450, 1100, 4}, 
-        {1600000, 1400, 1100, 5},
-        {1400000, 1350, 1100, 6},
-        {1200000, 1250, 1100, 7},
-        {1000000, 1200, 1100, 8},
-        {800000, 1150, 1100, 9},
-        {400000, 1050, 1100, 10},
-        {200000, 950, 1100, 11},
-        {100000, 950, 1000, 12},
+	{1600000, 1450, 1100, 0}, 
+	{1400000, 1400, 1100, 1}, 
+        {1200000, 1350, 1100, 2},
+        {1000000, 1250, 1100, 3},
+        {800000, 1200, 1100, 4},
+        {600000, 1150, 1100, 5},
+        {400000, 1050, 1100, 6},
+        {200000, 950, 1100, 7},
+        {100000, 950, 1000, 8},
 #else //just for dvs test
         {1000000, 1250, 1100, 0},
         {800000, 1250, 1100, 1},
@@ -130,15 +126,11 @@ unsigned int frequency_match_1GHZ[][4] = {
 
 unsigned int frequency_voltage_tab[][3] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
-	{2400000, 1500, 1500},
-	{2300000, 1500, 1500},
-	{2200000, 1450, 1450},
-	{2000000, 1450, 1450},
-	{1800000, 1450, 1400},
-        {1600000, 1400, 1350},
-        {1400000, 1350, 1250},
-        {1200000, 1250, 1250},
-        {1000000, 1200, 1200},
+	{1600000, 1450, 1500}, 
+	{1400000, 1400, 1450}, 
+        {1200000, 1350, 1400},
+        {1000000, 1250, 1250},
+        {800000, 1150, 1150},
         {600000, 1150, 1150},
         {400000, 1050, 1050},
         {200000, 950, 950},
@@ -171,53 +163,41 @@ static const unsigned int voltage_table[16] = {
 #if defined (USE_1DOT2GH) //Rajucm
 unsigned int frequency_match_1DOT2GHZ_ASV0[][4] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
-	{2400000, 1500, 1100, 0}, 
-	{2300000, 1500, 1100, 1}, 
-	{2200000, 1450, 1100, 2}, 
-	{2000000, 1450, 1100, 3}, 
-	{1800000, 1450, 1100, 4}, 
-        {1600000, 1400, 1100, 5},
-        {1400000, 1350, 1100, 6},
-        {1200000, 1250, 1100, 7},
-        {1000000, 1200, 1100, 8},
-        {800000, 1150, 1100, 9},
-        {400000, 1050, 1100, 10},
-        {200000, 950, 1100, 11},
-        {100000, 950, 1000, 12},
+	{1600000, 1450, 1100, 0}, 
+	{1400000, 1400, 1100, 1}, 
+        {1200000, 1350, 1100, 2},
+        {1000000, 1250, 1100, 3},
+        {800000, 1200, 1100, 4},
+        {600000, 1150, 1100, 5},
+        {400000, 1050, 1100, 6},
+        {200000, 950, 1100, 7},
+        {100000, 950, 1000, 8},
 };
 
 unsigned int frequency_match_1DOT2GHZ_ASV1[][4] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
-	{2400000, 1500, 1100, 0}, 
-	{2300000, 1500, 1100, 1}, 
-	{2200000, 1450, 1100, 2}, 
-	{2000000, 1450, 1100, 3}, 
-	{1800000, 1450, 1100, 4}, 
-        {1600000, 1400, 1100, 5},
-        {1400000, 1350, 1100, 6},
-        {1200000, 1250, 1100, 7},
-        {1000000, 1200, 1100, 8},
-        {800000, 1150, 1100, 9},
-        {400000, 1050, 1100, 10},
-        {200000, 950, 1100, 11},
-        {100000, 950, 1000, 12},
+	{1600000, 1450, 1100, 0}, 
+	{1400000, 1400, 1100, 1}, 
+        {1200000, 1350, 1100, 2},
+        {1000000, 1250, 1100, 3},
+        {800000, 1200, 1100, 4},
+        {600000, 1150, 1100, 5},
+        {400000, 1050, 1100, 6},
+        {200000, 950, 1100, 7},
+        {100000, 950, 1000, 8},
 };
 
 unsigned int frequency_match_1DOT2GHZ_ASV2[][4] = {
 /* frequency, Mathced VDD ARM voltage , Matched VDD INT*/
-	{2400000, 1500, 1100, 0}, 
-	{2300000, 1500, 1100, 1}, 
-	{2200000, 1450, 1100, 2}, 
-	{2000000, 1450, 1100, 3}, 
-	{1800000, 1450, 1100, 4}, 
-        {1600000, 1400, 1100, 5},
-        {1400000, 1350, 1100, 6},
-        {1200000, 1250, 1100, 7},
-        {1000000, 1200, 1100, 8},
-        {800000, 1150, 1100, 9},
-        {400000, 1050, 1100, 10},
-        {200000, 950, 1100, 11},
-        {100000, 950, 1000, 12},
+	{1600000, 1450, 1100, 0}, 
+	{1400000, 1400, 1100, 1}, 
+        {1200000, 1350, 1100, 2},
+        {1000000, 1250, 1100, 3},
+        {800000, 1200, 1100, 4},
+        {600000, 1150, 1100, 5},
+        {400000, 1050, 1100, 6},
+        {200000, 950, 1100, 7},
+        {100000, 950, 1000, 8},
 };
 
 const unsigned int (*frequency_match[4])[4] = {
@@ -268,19 +248,15 @@ static const unsigned int dvs_volt_table_800MHZ[][3] = {
 };
 #if !defined (USE_1DOT2GH) //Rajucm
 static const unsigned int dvs_volt_table_1GHZ[][3] = {
-	{L0, DVSARM1, DVSINT1},
+        {L0, DVSARM1, DVSINT1},
         {L1, DVSARM1, DVSINT1},
         {L2, DVSARM1, DVSINT1},
         {L3, DVSARM1, DVSINT1},
-        {L4, DVSARM1, DVSINT1},
-        {L5, DVSARM1, DVSINT1},
-        {L6, DVSARM1, DVSINT1},
-        {L7, DVSARM1, DVSINT1},
-        {L8, DVSARM2, DVSINT1},
-        {L9, DVSARM2, DVSINT1},
-        {L10, DVSARM3, DVSINT1},
-        {L11, DVSARM4, DVSINT1},
-        {L12, DVSARM4, DVSINT2},
+        {L4, DVSARM2, DVSINT1},
+        {L5, DVSARM2, DVSINT1},
+        {L6, DVSARM3, DVSINT1},
+        {L7, DVSARM4, DVSINT1},
+        {L8, DVSARM4, DVSINT2},
 };
 
 
@@ -302,71 +278,55 @@ static const unsigned int dvs_arm_voltage_set[][2] = {
 #if defined (USE_1DOT2GH) //Rajucm
 /*only 4 Arm voltages and 2 internal voltages possible*/
 static const unsigned int dvs_volt_table_1DOT2GHZ_ASV0[][3] = {
-       	{L0, DVSARM1, DVSINT1},
+        {L0, DVSARM1, DVSINT1},
         {L1, DVSARM1, DVSINT1},
         {L2, DVSARM1, DVSINT1},
         {L3, DVSARM1, DVSINT1},
-        {L4, DVSARM1, DVSINT1},
-        {L5, DVSARM1, DVSINT1},
-        {L6, DVSARM1, DVSINT1},
-        {L7, DVSARM1, DVSINT1},
-        {L8, DVSARM2, DVSINT1},
-        {L9, DVSARM2, DVSINT1},
-        {L10, DVSARM3, DVSINT1},
-        {L11, DVSARM4, DVSINT1},
-        {L12, DVSARM4, DVSINT2},
+        {L4, DVSARM2, DVSINT1},
+        {L5, DVSARM2, DVSINT1},
+        {L6, DVSARM3, DVSINT1},
+        {L7, DVSARM4, DVSINT1},
+        {L8, DVSARM4, DVSINT2},
 
 };
 
 
 static const unsigned int dvs_volt_table_1DOT2GHZ_ASV1[][3] = {
-	{L0, DVSARM1, DVSINT1},
+        {L0, DVSARM1, DVSINT1},
         {L1, DVSARM1, DVSINT1},
         {L2, DVSARM1, DVSINT1},
         {L3, DVSARM1, DVSINT1},
-        {L4, DVSARM1, DVSINT1},
-        {L5, DVSARM1, DVSINT1},
-        {L6, DVSARM1, DVSINT1},
-        {L7, DVSARM1, DVSINT1},
-        {L8, DVSARM2, DVSINT1},
-        {L9, DVSARM2, DVSINT1},
-        {L10, DVSARM3, DVSINT1},
-        {L11, DVSARM4, DVSINT1},
-        {L12, DVSARM4, DVSINT2},
+        {L4, DVSARM2, DVSINT1},
+        {L5, DVSARM2, DVSINT1},
+        {L6, DVSARM3, DVSINT1},
+        {L7, DVSARM4, DVSINT1},
+        {L8, DVSARM4, DVSINT2},
 
 };
 
 static const unsigned int dvs_volt_table_1DOT2GHZ_ASV2[][3] = {
-	{L0, DVSARM1, DVSINT1},
+        {L0, DVSARM1, DVSINT1},
         {L1, DVSARM1, DVSINT1},
         {L2, DVSARM1, DVSINT1},
         {L3, DVSARM1, DVSINT1},
-        {L4, DVSARM1, DVSINT1},
-        {L5, DVSARM1, DVSINT1},
-        {L6, DVSARM1, DVSINT1},
-        {L7, DVSARM1, DVSINT1},
-        {L8, DVSARM2, DVSINT1},
-        {L9, DVSARM2, DVSINT1},
-        {L10, DVSARM3, DVSINT1},
-        {L11, DVSARM4, DVSINT1},
-        {L12, DVSARM4, DVSINT2},
+        {L4, DVSARM2, DVSINT1},
+        {L5, DVSARM2, DVSINT1},
+        {L6, DVSARM3, DVSINT1},
+        {L7, DVSARM4, DVSINT1},
+        {L8, DVSARM4, DVSINT2},
 
 };
 
 static const unsigned int dvs_volt_table_1GHZ[][3] = {
-	{L0, DVSARM1, DVSINT1},
+        {L0, DVSARM1, DVSINT1},
         {L1, DVSARM1, DVSINT1},
         {L2, DVSARM1, DVSINT1},
         {L3, DVSARM1, DVSINT1},
-        {L4, DVSARM1, DVSINT1},
-        {L5, DVSARM1, DVSINT1},
-        {L6, DVSARM1, DVSINT1},
-        {L7, DVSARM1, DVSINT1},
-        {L8, DVSARM2, DVSINT1},
-        {L9, DVSARM2, DVSINT1},
-        {L10, DVSARM3, DVSINT1},
-        {L11, DVSARM4, DVSINT1},
-        {L12, DVSARM4, DVSINT2},
+        {L4, DVSARM2, DVSINT1},
+        {L5, DVSARM2, DVSINT1},
+        {L6, DVSARM3, DVSINT1},
+        {L7, DVSARM4, DVSINT1},
+        {L8, DVSARM4, DVSINT2},
 };
 
 
@@ -379,7 +339,7 @@ const unsigned int (*dvs_volt_table[4])[3] = {
 
 
 static unsigned int dvs_arm_voltage_set_1DOT2GHZ_ASV0[][2] = {
-	{DVSARM1, 1500},
+	{DVSARM1, 1450},
 	{DVSARM2, 1200},
 	{DVSARM3, 1050},
 	{DVSARM4, 1300}, //{DVSARM4, 950},
@@ -388,7 +348,7 @@ static unsigned int dvs_arm_voltage_set_1DOT2GHZ_ASV0[][2] = {
 };
 
 static unsigned int dvs_arm_voltage_set_1DOT2GHZ_ASV1[][2] = {
-	{DVSARM1, 1500},
+	{DVSARM1, 1450},
 	{DVSARM2, 1125},
 	{DVSARM3, 1100},
 	{DVSARM4, 950},
@@ -397,7 +357,7 @@ static unsigned int dvs_arm_voltage_set_1DOT2GHZ_ASV1[][2] = {
 };
 
 static unsigned int dvs_arm_voltage_set_1DOT2GHZ_ASV2[][2] = {
-	{DVSARM1, 1500},
+	{DVSARM1, 1450},
 	{DVSARM2, 1100},
 	{DVSARM3, 1050},
 	{DVSARM4, 950},
@@ -406,7 +366,7 @@ static unsigned int dvs_arm_voltage_set_1DOT2GHZ_ASV2[][2] = {
 };
 
 static unsigned int dvs_arm_voltage_set_1GHZ[][2] = {
-	{DVSARM1, 1500},
+	{DVSARM1, 1450},
 	{DVSARM2, 1200},
 	{DVSARM3, 1050},
 	{DVSARM4, 950},
@@ -657,21 +617,17 @@ static int set_max8998(unsigned int pwr, enum perf_level p_lv)
 		case L1:
 		case L2:
 		case L3:
-		case L4:
-		case L5:
-		case L6:
-		case L7:
 		    max8998_set_dvsarm_direct(DVSARM1, voltage);
 		    break;
-		case L8:
-		case L9:
+		case L4:
+		case L5:
 		    max8998_set_dvsarm_direct(DVSARM2, voltage);
 		    break;
-		case L10:
+		case L6:
 		    max8998_set_dvsarm_direct(DVSARM3, voltage);
 		    break;
-		case L11:
-		case L12:
+		case L7:
+		case L8:
 		    max8998_set_dvsarm_direct(DVSARM4, voltage);
 		    break;
 		}
@@ -780,21 +736,17 @@ int set_gpio_dvs(enum perf_level p_lv)
 	case L1:
 	case L2:
 	case L3:
-	case L4:
-	case L5:
-	case L6:
-	case L7:
 	    max8998_set_dvsarm_direct(DVSARM1, frequency_match_tab[p_lv][1]);
 	    break;
-	case L8:
-	case L9:
+	case L4:
+	case L5:
 	    max8998_set_dvsarm_direct(DVSARM2, frequency_match_tab[p_lv][1]);
 	    break;
-	case L10:
+	case L6:
 	    max8998_set_dvsarm_direct(DVSARM3, frequency_match_tab[p_lv][1]);
 	    break;
-	case L11:
-	case L12:
+	case L7:
+	case L8:
 	    max8998_set_dvsarm_direct(DVSARM4, frequency_match_tab[p_lv][1]);
 	    break;
 	}
@@ -805,23 +757,19 @@ int set_gpio_dvs(enum perf_level p_lv)
         case L1:
         case L2:
         case L3:
-        case L4:
-        case L5:
-        case L6:
-        case L7:
             writel(((readl(S5PV210_GPH0DAT) & ~PMIC_SET_MASK)                                                ), S5PV210_GPH0DAT);
             break;
-        case L8:
-        case L9:
+        case L4:
+        case L5:
             writel(((readl(S5PV210_GPH0DAT) & ~PMIC_SET_MASK) | PMIC_SET1_BIT                                ), S5PV210_GPH0DAT);
             break;
-        case L10:
+        case L6:
             writel(((readl(S5PV210_GPH0DAT) & ~PMIC_SET_MASK)                 | PMIC_SET2_BIT                ), S5PV210_GPH0DAT);
             break;
-        case L11:
+        case L7:
             writel(((readl(S5PV210_GPH0DAT) & ~PMIC_SET_MASK) | PMIC_SET1_BIT | PMIC_SET2_BIT                ), S5PV210_GPH0DAT);
             break;
-        case L12:
+        case L8:
             writel(((readl(S5PV210_GPH0DAT) & ~PMIC_SET_MASK) | PMIC_SET1_BIT | PMIC_SET2_BIT | PMIC_SET3_BIT), S5PV210_GPH0DAT);
             break;
          default:

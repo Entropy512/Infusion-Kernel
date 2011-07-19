@@ -2,3 +2,7 @@
 mkdir -p drivers/fsr && mkdir -p fs/rfs && touch drivers/fsr/Makefile && touch fs/rfs/Makefile
 make clean
 rm -rf drivers/fsr && rm -rf fs/rfs
+rm arch/arm/mach-s5pv210/clock.c
+rm arch/arm/mach-s5pv210/cpu-freq.c
+rm arch/arm/mach-s5pv210/max8998_consumer.c
+rm arch/arm/mach-s5pv210/include/mach/cpu-freq-v210.h

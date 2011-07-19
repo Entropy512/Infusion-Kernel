@@ -18,15 +18,12 @@ upon flashing, semi-bricking your phone... not a Happy Thing.
 8. If you want init.d support, add "service sysinit /system/bin/logwrapper /system/xbin/busybox run-parts /system/etc/init.d
   oneshot" to your init.rc in your initramfs and if you want insecure boot, swap secure.ro to =0 in your default.prop
 
-9. Execute 'make bedwa_defconfig'.
+9. Execute either ./Core-A or ./Core-B depending on which clock scheme you want.
 
-10. Execute 'make' or 'make -j<n>' where '<n>' is the number of multiple jobs to be invoked simultaneously.
-
-11. If the kernel is built successfully, you will find the following file:
+10. If the kernel is built successfully, you will find the following file:
 	Infusion Kernel/arch/arm/boot/zImage
 
-12. If you would like to use the drivers you compiled instead of the included in my initramfs repo, search for .ko files in linux_sgh-i997-hacked, copy them to froyo-sgh-i997-initramfs-hacked/lib/modules, and then compile again.
-
+11. Before rebuilding, execute ./clean
 
 	Linux kernel release 2.6.xx <http://kernel.org/>
 
