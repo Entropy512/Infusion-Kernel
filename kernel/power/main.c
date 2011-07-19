@@ -17,7 +17,6 @@
 //#endif
 #include "power.h"
 
-
 static void do_dvfsunlock_timer(struct work_struct *work);
 static DEFINE_MUTEX (dvfslock_ctrl_mutex);
 static DECLARE_DELAYED_WORK(dvfslock_crtl_unlock_work, do_dvfsunlock_timer);
@@ -152,13 +151,11 @@ static ssize_t dvfslock_ctrl(const char *buf, size_t count)
 	dlevel = gdDvfsctrl & 0xffff0000;
 	dtime_msec = gdDvfsctrl & 0x0000ffff;
 	if (dtime_msec <16) dtime_msec=16;
-	
-#if defined (LEV_1000MHZ)
 	if (dtime_msec  == 0) return -EINVAL;
+#if MAXIMUM_FREQ == 1200000
 	if(dlevel) dlevel = LEV_800MHZ;
 	else dlevel = LEV_1000MHZ;
 #else
-	if (dtime_msec  == 0) return -EINVAL;
 	if(dlevel) dlevel = LEV_832MHZ;
 	else dlevel = LEV_1040MHZ;
 #endif	

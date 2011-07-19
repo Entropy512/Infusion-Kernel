@@ -92,7 +92,7 @@ static int mfc_open(struct inode *inode, struct file *file)
 		s5pc110_lock_dvfs_high_level(DVFS_LOCK_TOKEN_1, 2); // DVFS Limit 200Mhz when mfc is running
 #endif
 #if defined(CONFIG_MACH_S5PC110_ARIES)
-		#ifdef LEV_400MHZ
+		#if MAXIMUM_FREQ == 1200000
 		s5pc110_lock_dvfs_high_level(DVFS_LOCK_TOKEN_1, LEV_400MHZ);
 		#else
 		s5pc110_lock_dvfs_high_level(DVFS_LOCK_TOKEN_1, LEV_416MHZ);

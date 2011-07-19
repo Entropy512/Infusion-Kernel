@@ -291,7 +291,7 @@ int enter_state(suspend_state_t state)
     	} else if(is_conservative_gov()) {
 		/*Fix the upper transition scaling*/
 		g_dvfs_fix_lock_limit = true;
-#if defined (LEV_800MHZ)
+#if MAXIMUM_FREQ == 1200000
 		s5pc110_lock_dvfs_high_level(DVFS_LOCK_TOKEN_7, LEV_800MHZ);
 #else
 		s5pc110_lock_dvfs_high_level(DVFS_LOCK_TOKEN_7, LEV_832MHZ);

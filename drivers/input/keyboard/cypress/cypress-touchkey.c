@@ -205,7 +205,7 @@ void touchkey_work_func(struct work_struct *p)
 	set_touchkey_debug('a');
 	if (!gpio_get_value(_3_GPIO_TOUCH_INT)) {
 		#ifdef CONFIG_CPU_FREQ
-		#ifdef LEV_800MHZ
+		#if MAXIMUM_FREQ == 1200000
 		set_dvfs_target_level(LEV_800MHZ);
 		#else
 		set_dvfs_target_level(LEV_832MHZ);

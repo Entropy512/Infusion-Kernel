@@ -11,12 +11,12 @@
 
 //extern void s5pc110_lock_power_domain(unsigned int nToken);
 
-#define MAXIMUM_FREQ 1200000
+#define MAXIMUM_FREQ 1248000
 #define USE_FREQ_TABLE
 //#undef USE_DVS
 #define USE_DVS
-#define VERY_HI_RATE  800*1000*1000
-#define APLL_GEN_CLK  800*1000
+#define VERY_HI_RATE  832*1000*1000
+#define APLL_GEN_CLK  832*1000
 #define KHZ_T		1000
 
 #define MPU_CLK		"armclk"

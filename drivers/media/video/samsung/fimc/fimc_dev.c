@@ -986,7 +986,7 @@ static int fimc_open(struct file *filp)
 
 #ifdef CONFIG_CPU_FREQ
 	if (0 == ctrl->id)
-		#ifdef LEV_200MHZ
+		#if MAXIMUM_FREQ == 1200000
     		s5pc110_lock_dvfs_high_level(DVFS_LOCK_TOKEN_2, LEV_200MHZ);
 		#else
     		s5pc110_lock_dvfs_high_level(DVFS_LOCK_TOKEN_2, LEV_208MHZ);
